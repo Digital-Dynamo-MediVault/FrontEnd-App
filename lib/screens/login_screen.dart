@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: height * 0.04,
                 ),
                 Text(
-                  "Phone Number",
+                  "Patient ID".toUpperCase(),
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
@@ -61,6 +61,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: height * 0.008,
                 ),
                 TextField(
+                  onSubmitted: (String value) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Hello"),
+                      ),
+                    );
+                  },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
