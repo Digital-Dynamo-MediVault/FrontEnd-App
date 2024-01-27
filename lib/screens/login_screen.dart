@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medivault/screens/dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -107,34 +108,44 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: height * 0.04,
                 ),
-                Hero(
-                  tag: "login",
-                  child: Container(
-                    child: Center(
-                      child: Text(
-                        "LOGIN",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          fontSize: 20,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (builder) => DashboardScreen(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                  child: Hero(
+                    tag: "login",
+                    child: Container(
+                      child: Center(
+                        child: Text(
+                          "LOGIN",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
-                    ),
-                    height: height * 0.08,
-                    width: width * 0.8,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        width: 2,
-                        color: Colors.black,
+                      height: height * 0.08,
+                      width: width * 0.8,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          width: 2,
+                          color: Colors.black,
+                        ),
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xff18A9BC),
+                            Color(0xff236B72),
+                          ],
+                        ),
+                        // color: Colors.red,
                       ),
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xff18A9BC),
-                          Color(0xff236B72),
-                        ],
-                      ),
-                      // color: Colors.red,
                     ),
                   ),
                 ),
