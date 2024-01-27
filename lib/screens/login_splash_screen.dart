@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:medivault/constants.dart';
+import 'package:medivault/screens/dashboard_screen.dart';
 import 'package:medivault/screens/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:local_auth/local_auth.dart';
 
 class LoginSplashScreen extends StatefulWidget {
   const LoginSplashScreen({Key? key}) : super(key: key);
@@ -10,6 +14,7 @@ class LoginSplashScreen extends StatefulWidget {
 }
 
 class _LoginSplashScreenState extends State<LoginSplashScreen> {
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -60,13 +65,38 @@ class _LoginSplashScreenState extends State<LoginSplashScreen> {
                 height: height * 0.1,
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (builder) => LoginScreen(),
-                    ),
-                  );
+                onTap: () async {
+                  final pref = await SharedPreferences.getInstance();
+                  final mmid = pref.getString("mmid");
+                  if (mmid == null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (builder) => LoginScreen(),
+                      ),
+                    );
+                  } else {
+                    final LocalAuthentication auth = LocalAuthentication();
+                    final bool didAuthenticate = await auth.authenticate(
+                        localizedReason:
+                            'Please authenticate to show account balance');
+                    if (didAuthenticate) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (builder) => DashboardScreen(),
+                        ),
+                        (route) => false,
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (builder) => LoginScreen(),
+                        ),
+                      );
+                    }
+                  }
                 },
                 child: Hero(
                   tag: "login",
