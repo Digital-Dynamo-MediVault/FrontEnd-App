@@ -79,7 +79,7 @@ class _LoginSplashScreenState extends State<LoginSplashScreen> {
                     final LocalAuthentication auth = LocalAuthentication();
                     final bool didAuthenticate = await auth.authenticate(
                         localizedReason:
-                            'Please authenticate to show account balance');
+                            'Please authenticate to show account details');
                     if (didAuthenticate) {
                       Navigator.pushAndRemoveUntil(
                         context,

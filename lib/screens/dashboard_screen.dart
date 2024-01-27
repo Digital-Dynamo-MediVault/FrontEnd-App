@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:medivault/constants.dart';
 import 'package:medivault/screens/symptoms_speech_screen.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -23,6 +24,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   };
   Razorpay _razorpay = Razorpay();
+
+  String name = "Tanishq";
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     // Do something when payment succeeds
     print('AAAAAAAAAAA');
@@ -47,6 +50,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    getName();
   }
 
   @override
@@ -71,7 +75,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
           backgroundColor: kPrimaryColor,
-          child: Icon(
+          child: const Icon(
             Icons.mic,
             color: Colors.white,
           ),
@@ -80,7 +84,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (builder) => SpeechScreen(),
+                builder: (builder) => const SpeechScreen(),
               ),
             );
           },
@@ -109,18 +113,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         children: [
                           Row(
                             children: [
-                              const Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Hello Tanishq!",
-                                    style: TextStyle(
+                                    "Hello ${name.split(" ")[0]}!",
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 24,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  Text(
+                                  const Text(
                                     "Let us make you feel better",
                                     style: TextStyle(
                                       color: Colors.white,
@@ -509,8 +513,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                           Container(
                             width: double.infinity,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
                                 vertical: 8.0,
                                 horizontal: 8,
                               ),
@@ -583,7 +587,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: height * 0.02,
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       vertical: 8,
                       horizontal: 14,
                     ),
@@ -649,7 +653,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 }
                               },
                               child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                   vertical: 8,
                                   horizontal: 12,
                                 ),
@@ -660,7 +664,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   ),
                                   color: kPrimaryColor,
                                 ),
-                                child: Text(
+                                child: const Text(
                                   "Pay",
                                   style: TextStyle(
                                     color: Colors.white,
@@ -673,7 +677,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         SizedBox(
                           height: height * 0.02,
                         ),
-                        Text(
+                        const Text(
                           "Report",
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
@@ -687,11 +691,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
                                             .substring(0, 50) +
                                         '...',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                              TextSpan(
+                              const TextSpan(
                                 text: 'View complete report',
                                 style: TextStyle(
                                   color: Color(0xff2D7F8A),
@@ -711,5 +715,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
     );
+  }
+
+  void getName() async {
+    final pref = await SharedPreferences.getInstance();
+    name = pref.getString("name") ?? "Tanishq";
+    print(name);
+    setState(() {});
   }
 }
