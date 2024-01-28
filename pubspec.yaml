@@ -55,6 +55,7 @@ dev_dependencies:
   speech_to_text: any
   avatar_glow: any
   highlight_text: any
+  linked_scroll_controller: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           } else {
                             Response res = await Dio().post(
-                              "https://embarrassed-twill-dog.cyclic.app/patient/login",
+                              "https://sapphire-fly-sari.cyclic.app/patient/login",
                               data: {
                                 "email": id.text,
                                 "password": pass.text,
@@ -207,6 +207,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               await pref.setString(
                                 'phone',
                                 res.data["user"]!["phone"].toString(),
+                              );
+                              await pref.setString(
+                                "reports",
+                                res.data['user']['report'].join('@-@'),
                               );
                               Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
